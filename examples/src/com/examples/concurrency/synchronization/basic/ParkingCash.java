@@ -10,21 +10,25 @@ public class ParkingCash {
     	
 	/**
 	 * called when a vehicle (a car or motorcycle) leaves the parking area. It will increase the cash attribute
+	 * synchronized 
 	 */
-	public void vehiclePay() {
+	public synchronized void vehiclePay() {
 		cash+=cost;
 	}
     
 	
 	/**
 	 * write the value of the cash attribute in the console and reinitialize it to zero
+	 * 
 	 */
 	public void close() {
 		System.out.printf("Closing accounting"); 
         long totalAmount; 
-        totalAmount=cash; 
-        cash=0; 
-        System.out.printf("The total amount is : %d",
+        synchronized (this) {
+			totalAmount = cash;
+			cash = 0;
+		}
+		System.out.printf("The total amount is : %d",
                           totalAmount);
 	}
 }

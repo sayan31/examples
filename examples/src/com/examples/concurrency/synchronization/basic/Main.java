@@ -27,7 +27,8 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
-
+		
+		System.out.printf("Number of sensors: %d\n", numberSensors);
 		System.out.printf("Number of cars: %d\n", stats.getNumberCars());
 		System.out.printf("Number of motorcycles: %d\n", stats.getNumberMotorcycles());
 		cash.close();

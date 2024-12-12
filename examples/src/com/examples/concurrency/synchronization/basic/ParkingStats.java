@@ -3,26 +3,33 @@ package com.examples.concurrency.synchronization.basic;
 public class ParkingStats {
 	private long numberCars;
 	private long numberMotorcycles;
+	private final Object controlCars, controlMotorcycles;
 	private ParkingCash cash;
 
 	public ParkingStats(ParkingCash cash) {
 		numberCars = 0;
 		numberMotorcycles = 0;
 		this.cash = cash;
+		this.controlCars = new Object();
+		this.controlMotorcycles = new Object();
 	}
 
 	/**
 	 * Increment counter when car comes in
 	 */
 	public void carComeIn() {
-		numberCars++;
+		synchronized (controlCars) {
+			numberCars++;
+		}
 	}
 
 	/**
 	 * Decrement counter & increment cash when car leaves.
 	 */
 	public void carGoOut() {
-		numberCars--;
+		synchronized (controlCars) {
+			numberCars--;
+		}
 		cash.vehiclePay();
 	}
 	
@@ -30,14 +37,18 @@ public class ParkingStats {
 	 * Increment counter when bike comes in
 	 */
 	public void motoComeIn() {
-		numberMotorcycles++;
+		synchronized (controlMotorcycles) {
+			numberMotorcycles++;
+		}
 	}
 	
 	/**
 	 * Decrement counter & increment cash when bike leaves.
 	 */
 	public void motoGoOut() {
-		numberMotorcycles--;
+		synchronized (controlMotorcycles) {
+			numberMotorcycles--;
+		}
 		cash.vehiclePay();
 	}
 
